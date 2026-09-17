@@ -71,11 +71,12 @@
                     <div class="js-swiper-{{ section_id }} swiper-container">
                 {% endif %}
                         <div class="js-products-{{ section_id }}-grid {% if use_slider %} swiper-wrapper{% else %}row row-grid{% endif %}" data-desktop-columns="{{ section_columns_desktop }}" data-mobile-columns="{{ section_columns_mobile }}" data-format="{{ section_format }}">
-                            {% for product in sections_products %}
+                            {% set grid_products = not use_slider ? (sections_products | slice(0, section_columns_desktop)) : sections_products %}
+                            {% for product in grid_products %}
                                 {% if use_slider %}
                                     {% include 'snipplets/grid/item.tpl' with {'slide_item': true, 'section_name': section_name, 'section_columns_desktop': section_columns_desktop, 'section_columns_mobile': section_columns_mobile } %}
                                 {% else %}
-                                    {% include 'snipplets/grid/item.tpl' %}
+                                    {% include 'snipplets/grid/item.tpl' with {'section_columns_desktop': section_columns_desktop, 'section_columns_mobile': section_columns_mobile, 'section_name': section_name } %}
                                 {% endif %}
                             {% endfor %}
                         </div>
@@ -155,12 +156,13 @@
                 {% if use_slider %}
                     <div class="js-swiper-{{ section_id }} swiper-container new-products-swiper-desktop {% if show_featured_banner %}featured-products-swiper-desktop{% endif %} w-100" style="--new-products-columns: {{ effective_desktop_columns }}; --featured-products-columns: {{ effective_desktop_columns }};">
                 {% endif %}
-                        <div class="js-products-{{ section_id }}-grid {% if use_slider %} swiper-wrapper{% else %}row row-grid{% endif %}" data-desktop-columns="{{ effective_desktop_columns }}" data-mobile-columns="{{ section_columns_mobile }}" data-format="{{ section_format }}">
-                            {% for product in sections_products %}
+                        <div class="js-products-{{ section_id }}-grid {% if use_slider %} swiper-wrapper{% else %}row row-grid justify-content-center{% endif %}" data-desktop-columns="{{ effective_desktop_columns }}" data-mobile-columns="{{ section_columns_mobile }}" data-format="{{ section_format }}">
+                            {% set grid_products = not use_slider ? (sections_products | slice(0, effective_desktop_columns)) : sections_products %}
+                            {% for product in grid_products %}
                                 {% if use_slider %}
                                     {% include 'snipplets/grid/item.tpl' with {'slide_item': true, 'section_name': section_name, 'section_columns_desktop': section_columns_desktop, 'section_columns_mobile': section_columns_mobile } %}
                                 {% else %}
-                                    {% include 'snipplets/grid/item.tpl' %}
+                                    {% include 'snipplets/grid/item.tpl' with {'section_columns_desktop': effective_desktop_columns, 'section_columns_mobile': section_columns_mobile, 'section_name': section_name } %}
                                 {% endif %}
                             {% endfor %}
                         </div>

@@ -1709,14 +1709,16 @@ p{
   }
 
   @media (min-width: 768px) {
-    .swiper-slide {
-      width: 250px !important;
-      max-width: 250px !important;
-    }
+    .swiper-container {
+      .swiper-slide {
+        width: 250px !important;
+        max-width: 250px !important;
+      }
 
-    .item {
-      width: 100% !important;
-      max-width: 250px !important;
+      .item {
+        width: 100% !important;
+        max-width: 250px !important;
+      }
     }
 
     .new-products-swiper-desktop,
@@ -2921,4 +2923,11 @@ p{
 
   /* // Width */
   .w-md-100{width:100%!important}.w-md-50{width:50%!important}.w-md-auto{width:auto!important}
+
+  /* // 5 Columns Grid Helper */
+  .col-md-2-4 {
+    -ms-flex: 0 0 20%;
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
 }
