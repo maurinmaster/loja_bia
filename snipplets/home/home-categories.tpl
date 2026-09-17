@@ -27,7 +27,7 @@
                             {% endif %}
                         {% endif %}
 
-                        <div class="swiper-slide w-auto">
+                        <div class="swiper-slide">
                             {% if slide.link %}
                                 <a href="{{ slide.link | setting_url }}" class="home-category-item" aria-label="{{ category_title | default('Categoría' | translate ~ ' ' ~ loop.index) }}">
                             {% else %}

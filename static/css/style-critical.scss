@@ -1904,6 +1904,18 @@ p{
   .js-swiper-categories {
     padding: 10px 0;
   }
+
+  .swiper-wrapper.justify-content-center {
+    justify-content: center !important;
+    transform: none !important;
+  }
+
+  .swiper-slide {
+    width: auto !important;
+    display: flex;
+    justify-content: center;
+    flex-shrink: 0;
+  }
 }
 
 .home-categories-title {
