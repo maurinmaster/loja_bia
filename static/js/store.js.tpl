@@ -1033,7 +1033,14 @@ DOMContentLoaded.addEventOrExecute(() => {
 
             {% set featured_columns_desktop = settings.featured_products_desktop %}
             {% set featured_columns_mobile = settings.featured_products_mobile %}
-            var slidesPerViewFeaturedDesktopVal = {% if featured_columns_desktop == 2 %}2{% elseif featured_columns_desktop == 3 %}3{% else %}4{% endif %};
+            {% if settings.featured_products_has_banner %}
+                {# Quando o banner lateral de destaques está ativo, desconta 1 para que o total de colunas visiveis (cards + 1 banner) respeite exatamente o configurado #}
+                {% set featured_columns_desktop_effective = featured_columns_desktop - 1 %}
+                {% if featured_columns_desktop_effective < 1 %}{% set featured_columns_desktop_effective = 1 %}{% endif %}
+                var slidesPerViewFeaturedDesktopVal = {{ featured_columns_desktop_effective }};
+            {% else %}
+                var slidesPerViewFeaturedDesktopVal = {% if featured_columns_desktop == 2 %}2{% elseif featured_columns_desktop == 3 %}3{% elseif featured_columns_desktop == 5 %}5{% else %}4{% endif %};
+            {% endif %}
             var slidesPerViewFeaturedMobileVal = {% if featured_columns_mobile == 1 %}1{% else %}2{% endif %};
 
             createSwiper('.js-swiper-featured', {

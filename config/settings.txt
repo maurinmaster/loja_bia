@@ -644,8 +644,54 @@ Página de inicio
 			2 = 2 productos
 			3 = 3 productos
 			4 = 4 productos
+			5 = 5 productos
 	subtitle
 		subtitle = <a target='_blank' href='/admin/themes/settings/product_order/'>Elegí cuáles vas a destacar</a>
+	subtitle
+		subtitle = Banner lateral de destacados
+	checkbox
+		name = featured_products_has_banner
+		description = Mostrar banner lateral junto a los productos destacados
+	dropdown
+		name = featured_products_width
+		description = Ancho de la sección
+		values
+			full = Pantalla completa
+			container = Ancho de la página
+	image
+		title = Cargar imagen del banner (JPG, GIF, PNG)
+		original = featured_products_banner.jpg
+		width = 800
+		height = 1000
+	i18n_input
+		name = featured_products_banner_title
+		description = Título del banner
+	i18n_input
+		name = featured_products_banner_subtitle
+		description = Subtítulo / Descripción
+	i18n_input
+		name = featured_products_banner_button_text
+		description = Texto del botón
+	i18n_input
+		name = featured_products_banner_button_url
+		description = Link del botón o banner
+	subtitle
+		subtitle = Colores de la sección
+	checkbox
+		name = featured_products_colors
+		description = Usar colores personalizados en esta sección
+	color
+		name = featured_products_bg_color
+		description = Color de fondo
+	color
+		name = featured_products_text_color
+		description = Color de textos
+	color
+		name = featured_products_btn_bg_color
+		description = Color de fondo del botón
+	color
+		name = featured_products_btn_text_color
+		description = Color de texto del botón
 	collapse
 		title = Productos nuevos
 		backto = home_order_position

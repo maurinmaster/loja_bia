@@ -4720,3 +4720,14 @@ es "Ancho de la página"
 pt "Largura da página"
 en "Page width"
 es_mx "Ancho de la página"
+
+es "Banner lateral de destacados"
+pt "Banner lateral de destaques"
+en "Featured lateral banner"
+es_mx "Banner lateral de destacados"
+
+es "Mostrar banner lateral junto a los productos destacados"
+pt "Exibir banner lateral junto aos produtos em destaque"
+en "Show lateral banner next to featured products"
+es_mx "Mostrar banner lateral junto a los productos destacados"
+
