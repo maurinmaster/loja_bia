@@ -1704,6 +1704,23 @@ p{
   .js-products-new-controls {
     display: none !important;
   }
+
+  @media (min-width: 768px) {
+    .swiper-slide {
+      width: 250px !important;
+      max-width: 250px !important;
+    }
+
+    .item {
+      width: 100% !important;
+      max-width: 250px !important;
+    }
+
+    .new-products-swiper-desktop {
+      max-width: calc(var(--new-products-columns, 3) * 250px + (var(--new-products-columns, 3) - 1) * 30px) !important;
+      margin: 0 auto !important;
+    }
+  }
 }
 
 .new-products-banner-box {

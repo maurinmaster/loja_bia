@@ -127,11 +127,13 @@
             </div>
 
             {# Right Column: Products Carousel / Grid #}
+            {% set effective_desktop_columns = show_new_banner ? ((section_columns_desktop - 1) | default(3)) : section_columns_desktop %}
+            {% if effective_desktop_columns < 1 %}{% set effective_desktop_columns = 1 %}{% endif %}
             <div class="col-12 col-lg-7 col-xl-8 pl-lg-2 d-flex flex-column justify-content-center">
                 {% if use_slider %}
-                    <div class="js-swiper-{{ section_id }} swiper-container w-100">
+                    <div class="js-swiper-{{ section_id }} swiper-container new-products-swiper-desktop w-100" style="--new-products-columns: {{ effective_desktop_columns }};">
                 {% endif %}
-                        <div class="js-products-{{ section_id }}-grid {% if use_slider %} swiper-wrapper{% else %}row row-grid{% endif %}" data-desktop-columns="{{ section_columns_desktop }}" data-mobile-columns="{{ section_columns_mobile }}" data-format="{{ section_format }}">
+                        <div class="js-products-{{ section_id }}-grid {% if use_slider %} swiper-wrapper{% else %}row row-grid{% endif %}" data-desktop-columns="{{ effective_desktop_columns }}" data-mobile-columns="{{ section_columns_mobile }}" data-format="{{ section_format }}">
                             {% for product in sections_products %}
                                 {% if use_slider %}
                                     {% include 'snipplets/grid/item.tpl' with {'slide_item': true, 'section_name': section_name, 'section_columns_desktop': section_columns_desktop, 'section_columns_mobile': section_columns_mobile } %}

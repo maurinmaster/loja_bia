@@ -671,6 +671,7 @@ Página de inicio
 			2 = 2 productos
 			3 = 3 productos
 			4 = 4 productos
+			5 = 5 productos
 	subtitle
 		subtitle = <a target='_blank' href='/admin/themes/settings/product_order/'>Elegí cuáles vas a destacar</a>
 	subtitle

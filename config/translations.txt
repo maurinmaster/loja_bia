@@ -4056,6 +4056,11 @@ es "4 productos"
 pt "4 produtos"
 es_mx "4 productos"
 
+es "5 productos"
+pt "5 produtos"
+en "5 products"
+es_mx "5 productos"
+
 es "Fotos del producto"
 pt "Fotos do produto"
 en "Product photos"

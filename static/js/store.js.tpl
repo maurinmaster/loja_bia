@@ -1075,7 +1075,14 @@ DOMContentLoaded.addEventOrExecute(() => {
 
             {% set new_columns_desktop = settings.new_products_desktop %}
             {% set new_columns_mobile = settings.new_products_mobile %}
-            var slidesPerViewNewDesktopVal = {% if new_columns_desktop == 2 %}2{% elseif new_columns_desktop == 3 %}3{% else %}4{% endif %};
+            {% if settings.new_products_has_banner %}
+                {# Quando o banner lateral está ativo, desconta 1 para que o total de colunas visiveis (1 banner + produtos) respeite exatamente o configurado #}
+                {% set new_columns_desktop_effective = new_columns_desktop - 1 %}
+                {% if new_columns_desktop_effective < 1 %}{% set new_columns_desktop_effective = 1 %}{% endif %}
+                var slidesPerViewNewDesktopVal = {{ new_columns_desktop_effective }};
+            {% else %}
+                var slidesPerViewNewDesktopVal = {% if new_columns_desktop == 2 %}2{% elseif new_columns_desktop == 3 %}3{% elseif new_columns_desktop == 5 %}5{% else %}4{% endif %};
+            {% endif %}
             var slidesPerViewNewMobileVal = {% if new_columns_mobile == 1 %}1{% else %}2{% endif %};
 
             createSwiper('.js-swiper-new', {
