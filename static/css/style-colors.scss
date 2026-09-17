@@ -1177,11 +1177,11 @@ input[type=number] {
 }
 
 .home-category-name {
-  color: var(--main-background);
+  color: var(--main-foreground);
 }
 
 .home-category-overlay {
-  background: var(--main-foreground-opacity-30);
+  display: none !important;
 }
 
 /* // Video */

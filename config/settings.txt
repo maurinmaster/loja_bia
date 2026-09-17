@@ -450,12 +450,19 @@ Página de inicio
 	i18n_input
 		name = main_categories_title
 		description = Título
+	dropdown
+		name = main_categories_width
+		description = Ancho de la sección
+		values
+			container = Ancho de la página
+			full = Pantalla completa
 	gallery
 		name = slider_categories
 		gallery_image = Agregar imagen
 		gallery_link = [Opcional] Página web a la que quieres que te lleve la imagen al hacer click
-		gallery_width = 170
-		gallery_height = 80
+		gallery_width = 200
+		gallery_height = 200
+		gallery_more_info = true
 	collapse
 		title = Información de envíos, pagos y compra
 		backto = home_order_position
