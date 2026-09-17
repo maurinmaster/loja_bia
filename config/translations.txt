@@ -4701,3 +4701,17 @@ pt "Cor do texto do botão"
 en "Button text color"
 es_mx "Color de texto del botón"
 
+es "Ancho de la sección"
+pt "Largura da seção"
+en "Section width"
+es_mx "Ancho de la sección"
+
+es "Pantalla completa"
+pt "Tela cheia"
+en "Full width"
+es_mx "Pantalla completa"
+
+es "Ancho de la página"
+pt "Largura da página"
+en "Page width"
+es_mx "Ancho de la página"

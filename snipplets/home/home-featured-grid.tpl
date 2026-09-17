@@ -51,8 +51,9 @@
 {% endif %}
 
 {% set show_new_banner = new_products and settings.new_products_has_banner %}
+{% set is_full_width = new_products and ((settings.new_products_width == 'full') or (settings.new_products_width is not defined and settings.new_products_has_banner)) %}
 
-<div class="js-products-{{ section_id }}-container container{% if show_new_banner %}-fluid px-3 px-md-4 px-lg-5{% endif %}">
+<div class="js-products-{{ section_id }}-container {% if is_full_width %}container-fluid px-2 px-md-3 px-lg-4{% else %}container{% endif %}">
     {% if not show_new_banner %}
         <div class="row">
             <div class="col-12">
@@ -92,7 +93,6 @@
             <div class="col-12 col-lg-5 col-xl-4 mb-4 mb-lg-0 pr-lg-3">
                 <div class="new-products-banner-box position-relative h-100 overflow-hidden d-flex flex-column justify-content-between p-4 p-md-5">
                     <div class="new-products-banner-bg" style="background-image: url('{{ banner_img_src }}');"></div>
-                    <div class="new-products-banner-overlay"></div>
                     
                     <div class="new-products-banner-content position-relative z-index-2 d-flex flex-column justify-content-between h-100">
                         <div class="new-products-banner-top">

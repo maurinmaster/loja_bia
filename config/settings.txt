@@ -678,6 +678,12 @@ Página de inicio
 	checkbox
 		name = new_products_has_banner
 		description = Mostrar banner lateral junto a los productos nuevos
+	dropdown
+		name = new_products_width
+		description = Ancho de la sección
+		values
+			full = Pantalla completa
+			container = Ancho de la página
 	image
 		title = Cargar imagen del banner (JPG, GIF, PNG)
 		original = new_products_banner.jpg

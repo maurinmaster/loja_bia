@@ -48,6 +48,7 @@ new_products_title_es = Novedades
 new_products_title_en = News
 new_products_title_pt = Lançamentos
 new_products_has_banner = 1
+new_products_width = full
 new_products_banner_title_pt = Elegância para o dia
 new_products_banner_title_es = Elegancia para el día
 new_products_banner_title_en = Elegance for the day
