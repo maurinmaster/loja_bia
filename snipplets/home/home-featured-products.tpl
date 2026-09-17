@@ -10,8 +10,19 @@
 	{% set data_store_name = 'sale' %}
 {% endif %}
 
+{% set is_new_section = has_new %}
+{% set custom_new_styles = '' %}
+{% if is_new_section and settings.new_products_colors %}
+	{% if settings.new_products_bg_color %}
+		{% set custom_new_styles = custom_new_styles ~ 'background-color: ' ~ settings.new_products_bg_color ~ ';' %}
+	{% endif %}
+	{% if settings.new_products_text_color %}
+		{% set custom_new_styles = custom_new_styles ~ 'color: ' ~ settings.new_products_text_color ~ ';' %}
+	{% endif %}
+{% endif %}
+
 {% if has_featured or has_new or has_sale %}
-	<section class="section-featured-home" data-store="home-products-{{ data_store_name }}">
+	<section class="section-featured-home{% if is_new_section and settings.new_products_has_banner %} section-new-products-featured py-4 py-md-5{% endif %}" data-store="home-products-{{ data_store_name }}" {% if custom_new_styles %}style="{{ custom_new_styles }}"{% endif %}>
 
 		{{ component('nubesdk-slot', { type: 'before_section_products_' ~ data_store_name }) }}
 

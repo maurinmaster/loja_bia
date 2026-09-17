@@ -73,6 +73,13 @@
   --services-background: {{ banner_services_background }};
   --services-foreground: {{ banner_services_foreground }};
 
+  {% if settings.new_products_colors %}
+  --new-products-bg: {{ settings.new_products_bg_color }};
+  --new-products-text: {{ settings.new_products_text_color }};
+  --new-products-btn-bg: {{ settings.new_products_btn_bg_color }};
+  --new-products-btn-text: {{ settings.new_products_btn_text_color }};
+  {% endif %}
+
   {# Color shades #}
 
   {# Opacity hex levels #}

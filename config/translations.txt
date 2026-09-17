@@ -4643,3 +4643,61 @@ es "Usá este texto para compartir información de tu negocio, dar la bienvenida
 pt "Use este texto para compartilhar informações da sua loja, dar boas vindas aos clientes ou para dizer o quão incrível são os seus produtos."
 en "Use this text to share information about your business, welcome your customers or tell how amazing your products are."
 es_mx "Usa este texto para compartir información de tu negocio, dar la bienvenida a tus clientes o para contar lo increíble que son tus productos."
+
+--- --- New Products with Banner
+
+es "Banner lateral de novedades"
+pt "Banner lateral de lançamentos"
+en "News lateral banner"
+es_mx "Banner lateral de novedades"
+
+es "Mostrar banner lateral junto a los productos nuevos"
+pt "Exibir banner lateral junto aos produtos novos"
+en "Show lateral banner next to new products"
+es_mx "Mostrar banner lateral junto a los productos nuevos"
+
+es "Cargar imagen del banner (JPG, GIF, PNG)"
+pt "Carregar imagem do banner (JPG, GIF, PNG)"
+en "Upload banner image (JPG, GIF, PNG)"
+es_mx "Cargar imagen del banner (JPG, GIF, PNG)"
+
+es "Título del banner"
+pt "Título do banner"
+en "Banner title"
+es_mx "Título del banner"
+
+es "Subtítulo / Descripción"
+pt "Subtítulo / Descrição"
+en "Subtitle / Description"
+es_mx "Subtítulo / Descripción"
+
+es "Texto del botón"
+pt "Texto do botão"
+en "Button text"
+es_mx "Texto del botón"
+
+es "Link del botón o banner"
+pt "Link do botão ou banner"
+en "Button or banner link"
+es_mx "Link del botón o banner"
+
+es "Colores de la sección"
+pt "Cores da seção"
+en "Cores da seção"
+es_mx "Colores de la sección"
+
+es "Usar colores personalizados en esta sección"
+pt "Usar cores personalizadas nesta seção"
+en "Use custom colors in this section"
+es_mx "Usar colores personalizados en esta sección"
+
+es "Color de fondo del botón"
+pt "Cor de fundo do botão"
+en "Button background color"
+es_mx "Color de fondo del botón"
+
+es "Color de texto del botón"
+pt "Cor do texto do botão"
+en "Button text color"
+es_mx "Color de texto del botón"
+
