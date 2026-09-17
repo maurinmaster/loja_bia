@@ -1131,7 +1131,7 @@ DOMContentLoaded.addEventOrExecute(() => {
 
             {% set sale_columns_desktop = settings.sale_products_desktop %}
             {% set sale_columns_mobile = settings.sale_products_mobile %}
-            var slidesPerViewSaleDesktopVal = {% if sale_columns_desktop == 2 %}2{% elseif sale_columns_desktop == 3 %}3{% else %}4{% endif %};
+            var slidesPerViewSaleDesktopVal = {% if sale_columns_desktop == 2 %}2{% elseif sale_columns_desktop == 3 %}3{% elseif sale_columns_desktop == 5 %}5{% else %}4{% endif %};
             var slidesPerViewSaleMobileVal = {% if sale_columns_mobile == 1 %}1{% else %}2{% endif %};
 
             createSwiper('.js-swiper-sale', {
@@ -1143,7 +1143,8 @@ DOMContentLoaded.addEventOrExecute(() => {
                 watchSlidesVisibility: true,
                 slideVisibleClass: 'js-swiper-slide-visible',
                 spaceBetween: itemSwiperSpaceBetween,
-            {% if sections.sale.products | length > 4 %}
+            {% set sale_items_count = sections.sale.products ? (sections.sale.products | length) : ((sections.primary.products | default(sections.new.products)) | length) %}
+            {% if sale_items_count > 4 %}
                 loop: true,
             {% endif %}
                 navigation: {

@@ -1,6 +1,7 @@
 {% set has_featured = has_featured | default(false) and sections.primary.products %}
 {% set has_new = has_new | default(false) and sections.new.products %}
-{% set has_sale = has_sale | default(false) and sections.sale.products %}
+{% set sale_source_products = sections.sale.products | default(sections.primary.products | default(sections.new.products)) %}
+{% set has_sale = has_sale | default(false) and sale_source_products %}
 
 {% if has_featured %}
 	{% set data_store_name = 'featured' %}

@@ -40,7 +40,7 @@
     {% set section_title = settings.new_products_title %}
 {% endif %}
 {% if sale_products %}
-    {% set sections_products = sections.sale.products %}
+    {% set sections_products = sections.sale.products | default(sections.primary.products | default(sections.new.products)) %}
     {% set section_name = 'sale' %}
     {% set section_columns_desktop = settings.sale_products_desktop %}
     {% set section_columns_mobile = settings.sale_products_mobile %}
@@ -71,7 +71,7 @@
                     <div class="js-swiper-{{ section_id }} swiper-container">
                 {% endif %}
                         <div class="js-products-{{ section_id }}-grid {% if use_slider %} swiper-wrapper{% else %}row row-grid{% endif %}" data-desktop-columns="{{ section_columns_desktop }}" data-mobile-columns="{{ section_columns_mobile }}" data-format="{{ section_format }}">
-                            {% set grid_products = not use_slider ? (sections_products | slice(0, section_columns_desktop)) : sections_products %}
+                            {% set grid_products = (not use_slider and section_id != 'sale') ? (sections_products | slice(0, section_columns_desktop)) : sections_products %}
                             {% for product in grid_products %}
                                 {% if use_slider %}
                                     {% include 'snipplets/grid/item.tpl' with {'slide_item': true, 'section_name': section_name, 'section_columns_desktop': section_columns_desktop, 'section_columns_mobile': section_columns_mobile } %}
