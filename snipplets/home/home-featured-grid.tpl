@@ -88,7 +88,7 @@
         {% set banner_has_custom = "new_products_banner.jpg" | has_custom_image %}
         {% set banner_img_src = banner_has_custom ? ("new_products_banner.jpg" | static_url | settings_image_url('1080p')) : ('images/new_products_banner.jpg' | static_url) %}
         
-        <div class="row align-items-stretch no-gutters new-products-split-wrapper">
+        <div class="row align-items-center no-gutters new-products-split-wrapper">
             {# Left Column: Hero Promo Banner #}
             <div class="col-12 col-lg-5 col-xl-4 mb-4 mb-lg-0 pr-lg-3">
                 <div class="new-products-banner-box position-relative h-100 overflow-hidden d-flex flex-column justify-content-between p-4 p-md-5">
@@ -141,15 +141,6 @@
                             {% endfor %}
                         </div>
                 {% if use_slider %}
-                    </div>
-                    <div class="js-products-{{ section_id }}-controls mt-3 text-center">
-                        <div class="js-swiper-{{ section_id }}-prev swiper-button-prev svg-icon-text">
-                            <svg class="icon-inline icon-lg icon-flip-horizontal"><use xlink:href="#arrow-long"/></svg>
-                        </div>
-                        <div class="js-swiper-{{ section_id }}-pagination swiper-pagination-fraction"></div>
-                        <div class="js-swiper-{{ section_id }}-next swiper-button-next svg-icon-text">
-                            <svg class="icon-inline icon-lg"><use xlink:href="#arrow-long"/></svg>
-                        </div>
                     </div>
                 {% endif %}
             </div>
