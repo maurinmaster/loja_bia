@@ -8,6 +8,7 @@
             {% endif %}
             <div class="js-swiper-categories swiper-container">
                 <div class="swiper-wrapper">
+                    {% set rendered_titles = [] %}
                     {% for slide in settings.slider_categories %}
                         {% set category_title = slide.title %}
                         {% if not category_title and slide.link %}
@@ -28,28 +29,32 @@
                             {% endif %}
                         {% endif %}
 
-                        <div class="swiper-slide">
-                            {% if slide.link %}
-                                <a href="{{ slide.link | setting_url }}" class="home-category-item" aria-label="{{ category_title | default('Categoría' | translate) }}">
-                            {% else %}
-                                <div class="home-category-item">
-                            {% endif %}
-                                    <div class="home-category-circle-wrapper">
-                                        <div class="home-category-circle position-relative">
-                                            <img src="{{ slide.image | static_url | settings_image_url('large') }}" class="home-category-circle-img" alt="{{ category_title | default('Categoría' | translate) }}" loading="lazy">
+                        {% set cat_key = category_title ? category_title : slide.image %}
+                        {% if cat_key not in rendered_titles %}
+                            {% set rendered_titles = rendered_titles | merge([cat_key]) %}
+                            <div class="swiper-slide">
+                                {% if slide.link %}
+                                    <a href="{{ slide.link | setting_url }}" class="home-category-item" aria-label="{{ category_title | default('Categoría' | translate) }}">
+                                {% else %}
+                                    <div class="home-category-item">
+                                {% endif %}
+                                        <div class="home-category-circle-wrapper">
+                                            <div class="home-category-circle position-relative">
+                                                <img src="{{ slide.image | static_url | settings_image_url('large') }}" class="home-category-circle-img" alt="{{ category_title | default('Categoría' | translate) }}" loading="lazy">
+                                            </div>
                                         </div>
+                                        {% if category_title %}
+                                            <span class="home-category-name text-center font-weight-bold">
+                                                {{ category_title }}
+                                            </span>
+                                        {% endif %}
+                                {% if slide.link %}
+                                    </a>
+                                {% else %}
                                     </div>
-                                    {% if category_title %}
-                                        <span class="home-category-name text-center font-weight-bold">
-                                            {{ category_title }}
-                                        </span>
-                                    {% endif %}
-                            {% if slide.link %}
-                                </a>
-                            {% else %}
-                                </div>
-                            {% endif %}
-                        </div>
+                                {% endif %}
+                            </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>
