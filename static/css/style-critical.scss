@@ -1973,11 +1973,11 @@ p{
 
   .js-swiper-categories {
     padding: 10px 0;
-  }
+    cursor: grab;
 
-  .swiper-wrapper.justify-content-center {
-    justify-content: center !important;
-    transform: none !important;
+    &:active {
+      cursor: grabbing;
+    }
   }
 
   .swiper-slide {
@@ -1985,6 +1985,8 @@ p{
     display: flex;
     justify-content: center;
     flex-shrink: 0;
+    user-select: none;
+    -webkit-user-select: none;
   }
 }
 
@@ -2086,6 +2088,30 @@ p{
 
 .home-category-overlay {
   display: none !important;
+}
+
+.js-categories-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    position: static;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
 }
 
 /* // Welcome message */

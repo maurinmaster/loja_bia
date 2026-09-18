@@ -1651,49 +1651,19 @@ DOMContentLoaded.addEventOrExecute(() => {
 
         {% if settings.main_categories %}
 
-            var alignCategoriesSwiper = function (swiperInstance) {
-                if (!swiperInstance || !swiperInstance.el) return;
-                var $container = jQueryNuvem(swiperInstance.el);
-                var $wrapper = $container.find('.swiper-wrapper');
-                var containerW = $container.width();
-                var totalW = 0;
-                $wrapper.find('.swiper-slide').each(function () {
-                    totalW += jQueryNuvem(this).outerWidth(true);
-                });
-                if (totalW <= (containerW + 2)) {
-                    $wrapper.addClass('justify-content-center');
-                    $wrapper.css('transform', 'none');
-                    jQueryNuvem('.js-categories-controls').hide();
-                } else {
-                    $wrapper.removeClass('justify-content-center');
-                    jQueryNuvem('.js-categories-controls').show();
-                }
-            };
-
             createSwiper('.js-swiper-categories', {
-                lazy: true,
-                preloadImages : false,
-                watchOverflow: true,
-                watchSlidesVisibility : true,
+                watchOverflow: false,
+                watchSlidesVisibility: true,
+                loop: true,
+                loopedSlides: 8,
+                loopAdditionalSlides: 2,
+                grabCursor: true,
+                threshold: 5,
                 slidesPerView: 'auto',
                 spaceBetween: 14,
                 navigation: {
                     nextEl: '.js-swiper-categories-next',
                     prevEl: '.js-swiper-categories-prev',
-                },
-                on: {
-                    afterInit: function () {
-                        var self = this;
-                        hideSwiperControls(".js-swiper-categories-prev", ".js-swiper-categories-next");
-                        alignCategoriesSwiper(self);
-                        setTimeout(function () { alignCategoriesSwiper(self); }, 150);
-                    },
-                    imagesReady: function () {
-                        alignCategoriesSwiper(this);
-                    },
-                    resize: function () {
-                        alignCategoriesSwiper(this);
-                    }
                 },
                 breakpoints: {
                     576: {
@@ -1713,6 +1683,9 @@ DOMContentLoaded.addEventOrExecute(() => {
                         spaceBetween: 28,
                     }
                 }
+            },
+            function(swiperInstance) {
+                window.categoriesSwiper = swiperInstance;
             });
 
         {% endif %}
@@ -1720,28 +1693,15 @@ DOMContentLoaded.addEventOrExecute(() => {
         {# Swiper used for demo component #}
 
         createSwiper('.js-swiper-categories-demo', {
-            preloadImages : false,
-            watchOverflow: true,
-            watchSlidesVisibility : true,
+            watchOverflow: false,
+            watchSlidesVisibility: true,
+            loop: true,
+            loopedSlides: 6,
             slidesPerView: 'auto',
             spaceBetween: 14,
             navigation: {
                 nextEl: '.js-swiper-categories-next-demo',
                 prevEl: '.js-swiper-categories-prev-demo',
-            },
-            on: {
-                afterInit: function () {
-                    var self = this;
-                    if (typeof alignCategoriesSwiper === 'function') {
-                        alignCategoriesSwiper(self);
-                        setTimeout(function () { alignCategoriesSwiper(self); }, 150);
-                    }
-                },
-                resize: function () {
-                    if (typeof alignCategoriesSwiper === 'function') {
-                        alignCategoriesSwiper(this);
-                    }
-                }
             },
             breakpoints: {
                 576: {
