@@ -1,4 +1,4 @@
-{# Detect presence of features that remove empty placeholders #}
+{# Detect presence of features that remove empty placeholders - updated #}
 
 {% set has_main_slider = settings.slider and settings.slider is not empty %}
 {% set has_mobile_slider = settings.toggle_slider_mobile and settings.slider_mobile and settings.slider_mobile is not empty %}
