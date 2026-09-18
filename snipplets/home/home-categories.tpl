@@ -1,18 +1,5 @@
 {% if settings.main_categories and settings.slider_categories and settings.slider_categories is not empty %}
     {% set is_full_width = settings.main_categories_width == 'full' %}
-    {% set categories_count = settings.slider_categories | length %}
-    {% set repeat_times = 1 %}
-    {% if categories_count > 0 %}
-        {% if categories_count < 4 %}
-            {% set repeat_times = 6 %}
-        {% elseif categories_count < 7 %}
-            {% set repeat_times = 4 %}
-        {% elseif categories_count < 10 %}
-            {% set repeat_times = 3 %}
-        {% elseif categories_count < 16 %}
-            {% set repeat_times = 2 %}
-        {% endif %}
-    {% endif %}
 
     <section class="section-categories-home position-relative py-4 py-md-5" data-store="home-categories-featured">
         <div class="{% if is_full_width %}container-fluid px-2 px-md-4{% else %}container{% endif %}">
@@ -21,50 +8,48 @@
             {% endif %}
             <div class="js-swiper-categories swiper-container">
                 <div class="swiper-wrapper">
-                    {% for rep in 1..repeat_times %}
-                        {% for slide in settings.slider_categories %}
-                            {% set category_title = slide.title %}
-                            {% if not category_title and slide.link %}
-                                {% set category_handle = slide.link | trim('/') | split('/') | last %}
-                                {% for cat in categories %}
-                                    {% if cat.handle == category_handle %}
-                                        {% set category_title = cat.name %}
-                                    {% else %}
-                                        {% for subcat in cat.subcategories %}
-                                            {% if subcat.handle == category_handle %}
-                                                {% set category_title = subcat.name %}
-                                            {% endif %}
-                                        {% endfor %}
-                                    {% endif %}
-                                {% endfor %}
-                                {% if not category_title and category_handle %}
-                                    {% set category_title = category_handle | replace('-', ' ') | capitalize %}
-                                {% endif %}
-                            {% endif %}
-
-                            <div class="swiper-slide">
-                                {% if slide.link %}
-                                    <a href="{{ slide.link | setting_url }}" class="home-category-item" aria-label="{{ category_title | default('Categoría' | translate) }}">
+                    {% for slide in settings.slider_categories %}
+                        {% set category_title = slide.title %}
+                        {% if not category_title and slide.link %}
+                            {% set category_handle = slide.link | trim('/') | split('/') | last %}
+                            {% for cat in categories %}
+                                {% if cat.handle == category_handle %}
+                                    {% set category_title = cat.name %}
                                 {% else %}
-                                    <div class="home-category-item">
-                                {% endif %}
-                                        <div class="home-category-circle-wrapper">
-                                            <div class="home-category-circle position-relative">
-                                                <img src="{{ slide.image | static_url | settings_image_url('large') }}" class="home-category-circle-img" alt="{{ category_title | default('Categoría' | translate) }}" loading="lazy">
-                                            </div>
-                                        </div>
-                                        {% if category_title %}
-                                            <span class="home-category-name text-center font-weight-bold">
-                                                {{ category_title }}
-                                            </span>
+                                    {% for subcat in cat.subcategories %}
+                                        {% if subcat.handle == category_handle %}
+                                            {% set category_title = subcat.name %}
                                         {% endif %}
-                                {% if slide.link %}
-                                    </a>
-                                {% else %}
-                                    </div>
+                                    {% endfor %}
                                 {% endif %}
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
+                            {% if not category_title and category_handle %}
+                                {% set category_title = category_handle | replace('-', ' ') | capitalize %}
+                            {% endif %}
+                        {% endif %}
+
+                        <div class="swiper-slide">
+                            {% if slide.link %}
+                                <a href="{{ slide.link | setting_url }}" class="home-category-item" aria-label="{{ category_title | default('Categoría' | translate) }}">
+                            {% else %}
+                                <div class="home-category-item">
+                            {% endif %}
+                                    <div class="home-category-circle-wrapper">
+                                        <div class="home-category-circle position-relative">
+                                            <img src="{{ slide.image | static_url | settings_image_url('large') }}" class="home-category-circle-img" alt="{{ category_title | default('Categoría' | translate) }}" loading="lazy">
+                                        </div>
+                                    </div>
+                                    {% if category_title %}
+                                        <span class="home-category-name text-center font-weight-bold">
+                                            {{ category_title }}
+                                        </span>
+                                    {% endif %}
+                            {% if slide.link %}
+                                </a>
+                            {% else %}
+                                </div>
+                            {% endif %}
+                        </div>
                     {% endfor %}
                 </div>
             </div>

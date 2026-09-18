@@ -1652,11 +1652,9 @@ DOMContentLoaded.addEventOrExecute(() => {
         {% if settings.main_categories %}
 
             createSwiper('.js-swiper-categories', {
-                watchOverflow: false,
+                watchOverflow: true,
+                centerInsufficientSlides: true,
                 watchSlidesVisibility: true,
-                loop: true,
-                loopedSlides: 8,
-                loopAdditionalSlides: 2,
                 grabCursor: true,
                 threshold: 5,
                 slidesPerView: 'auto',
@@ -1693,10 +1691,9 @@ DOMContentLoaded.addEventOrExecute(() => {
         {# Swiper used for demo component #}
 
         createSwiper('.js-swiper-categories-demo', {
-            watchOverflow: false,
+            watchOverflow: true,
+            centerInsufficientSlides: true,
             watchSlidesVisibility: true,
-            loop: true,
-            loopedSlides: 6,
             slidesPerView: 'auto',
             spaceBetween: 14,
             navigation: {
