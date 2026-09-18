@@ -1306,19 +1306,19 @@ DOMContentLoaded.addEventOrExecute(() => {
             createSwiper('.js-informative-banners', {
                 {% if has_multiple_banners_services %}
                     loop: true,
-                    centerInsufficientSlides: true,
+                    autoplay: {
+                        delay: 3500,
+                        disableOnInteraction: false,
+                    },
                 {% endif %}
                 watchOverflow: true,
                 threshold: 5,
-                spaceBetween: itemSwiperSpaceBetween,
-                navigation: {
-                    nextEl: '.js-informative-banners-next',
-                    prevEl: '.js-informative-banners-prev',
-                },
+                spaceBetween: 10,
                 breakpoints: {
                     768: {
-                        slidesPerView: 'auto',
+                        slidesPerView: 4,
                         loop: false,
+                        autoplay: false,
                     }
                 }
             });
@@ -2192,17 +2192,13 @@ DOMContentLoaded.addEventOrExecute(() => {
         {% endif %}
 
 
-        {% if settings.product_color_variants %}
-
-            {# Product color variations #}
-            if (window.innerWidth > 767) {
-                jQueryNuvem(document).on("click", ".js-color-variant", function(e) {
-                    e.preventDefault();
-                    $this = jQueryNuvem(this);
-                    changeVariantButton($this, '.js-item-product');
-                });
-            }
-        {% endif %}
+        {# Product color variations for minimal fashion cards #}
+        jQueryNuvem(document).on("click", ".js-color-variant", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var $this = jQueryNuvem(this);
+            changeVariantButton($this, '.js-item-product');
+        });
 
     {% endif %}
 
@@ -3642,5 +3638,66 @@ DOMContentLoaded.addEventOrExecute(() => {
         }
 
     {% endif %}
+
+    /* Minimalist Fashion Card - Floating UI & Wishlist */
+    (function() {
+        function getWishlist() {
+            try {
+                return JSON.parse(localStorage.getItem('loja_bia_wishlist') || '[]');
+            } catch(e) {
+                return [];
+            }
+        }
+        function setWishlist(items) {
+            try {
+                localStorage.setItem('loja_bia_wishlist', JSON.stringify(items));
+            } catch(e) {}
+        }
+        function syncWishlistUI() {
+            var wishlist = getWishlist();
+            jQueryNuvem('.js-item-wishlist').each(function() {
+                var $btn = jQueryNuvem(this);
+                var id = String($btn.attr('data-product-id') || '');
+                if (id && wishlist.indexOf(id) !== -1) {
+                    $btn.addClass('is-active');
+                } else {
+                    $btn.removeClass('is-active');
+                }
+            });
+        }
+
+        jQueryNuvem(document).on('click', '.js-item-wishlist', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var $btn = jQueryNuvem(this);
+            var id = String($btn.attr('data-product-id') || '');
+            if (!id) return;
+            var wishlist = getWishlist();
+            var idx = wishlist.indexOf(id);
+            if (idx === -1) {
+                wishlist.push(id);
+                $btn.addClass('is-active animate-pop');
+                setTimeout(function() {
+                    $btn.removeClass('animate-pop');
+                }, 400);
+            } else {
+                wishlist.splice(idx, 1);
+                $btn.removeClass('is-active');
+            }
+            setWishlist(wishlist);
+        });
+
+        jQueryNuvem(document).on('click', '.item-floating-action, .item-floating-fab', function(e) {
+            e.stopPropagation();
+        });
+
+        jQueryNuvem(document).ready(function() {
+            syncWishlistUI();
+        });
+
+        jQueryNuvem(document).ajaxComplete(function() {
+            syncWishlistUI();
+        });
+    })();
 
 });

@@ -2285,18 +2285,53 @@ p{
 .item-product {
   position: relative;
   z-index: 9;
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  padding-bottom: 6px;
 }
+
+.item-product .item {
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
 .item-image {
   position: relative;
-  max-height: 1200px;
   overflow: hidden;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  background: #f7f7f7;
 }
-.item-image img{
-  height: 100%;
-  max-height: 1200px;
-  width: auto;
-  transition: all .3s ease;
+
+/* 4:5 aspect ratio (height is 1.25x width) */
+.item-image .js-item-image-padding {
+  padding-bottom: 125% !important;
+  aspect-ratio: 4 / 5;
+  position: relative;
+  overflow: hidden;
+  display: block;
 }
+
+.item-image img,
+.item-image .item-image-featured,
+.item-image .item-image-secondary {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease !important;
+}
+
+.item-product:hover .item-image img {
+  transform: scale(1.025) !important;
+}
+
 .item-product-reduced .item-image {
   height: 130px;
 }
@@ -2307,8 +2342,8 @@ p{
 }
 .item-image-slide img{
   max-width: 100%;
-  object-fit: contain;
-  object-position: top;
+  object-fit: cover;
+  object-position: center;
 }
 .item-image:not(.product-item-image-secondary).lazyloaded {
   z-index: 2;
@@ -2330,49 +2365,308 @@ p{
   display: block;
   width: 100%;
 }
-.item-description {
-  padding: 10px 0;
-}
-.item-name {
-  line-height: 1.333em;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  -webkit-line-clamp: 2;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-}
-.item-price-container { 
-  font-size: var(--font-small);
-  line-height: var(--font-base);
-}
-.price-compare {
-  margin-left: 5px;
-  text-decoration: line-through;
-  opacity: .5;
-}
-.item-installments {
-  font-size: var(--font-smallest);
+
+/* Floating Actions (Floating UI sobre a foto) */
+.item-floating-action {
+  position: absolute;
+  z-index: 12;
+  pointer-events: auto;
 }
 
-.item-colors-bullet {
-  display: inline-block;
-  min-width: 8px;
-  height: 8px;
-  margin: 0 5px;
-  font-size: var(--font-smallest);
-  line-height: 10px;
-  vertical-align: top;
+/* Wishlist Top Right */
+.item-floating-wishlist {
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #111111;
   cursor: pointer;
-  opacity: 0.8;
-  -webkit-transition: all 0.4s ease;
-  -ms-transition: all 0.4s ease;
-  -moz-transition: all 0.4s ease;
-  -o-transition: all 0.4s ease;
-  transition: all 0.4s ease;
+  outline: none;
+  padding: 0;
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1);
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+
+  .item-wishlist-icon {
+    width: 17px;
+    height: 17px;
+    display: block;
+    stroke: #111111;
+    fill: transparent;
+    transition: fill 0.25s ease, stroke 0.25s ease, transform 0.25s ease;
+  }
+
+  &.is-active .item-wishlist-icon {
+    fill: #111111;
+    stroke: #111111;
+  }
+
+  &.animate-pop {
+    animation: wishlistPop 0.35s ease forwards;
+  }
 }
-.item-colors-bullet:hover,
-.item-colors-bullet.selected {
-  opacity: 1;
+
+@keyframes wishlistPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+/* Quick Add FAB Bottom Right */
+.item-floating-quickadd {
+  bottom: 10px;
+  right: 10px;
+}
+
+.item-floating-fab {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #111111;
+  color: #ffffff;
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s ease, box-shadow 0.2s ease;
+  padding: 0;
+  text-decoration: none !important;
+
+  &:hover {
+    background: #000000;
+    transform: scale(1.08);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.26);
+    color: #ffffff;
+  }
+
+  .item-fab-bag-icon {
+    width: 16px;
+    height: 16px;
+    stroke: #ffffff;
+    display: block;
+  }
+
+  .item-fab-plus {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: #111111;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    border-radius: 50%;
+    width: 11px;
+    height: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &:hover .item-fab-plus {
+    background: #000000;
+  }
+}
+
+.item-fab-placeholder {
+  display: none !important;
+}
+
+/* Tipografia Escandinava e Layout Minimalista */
+.item-description {
+  padding: 10px 0 2px 0 !important;
+  text-align: left !important;
+}
+
+.item-header-row {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: 8px;
+  min-height: 20px;
+}
+
+.item-title-link {
+  flex: 1 1 auto;
+  min-width: 0;
+  text-decoration: none !important;
+  display: block;
+}
+
+.item-name {
+  font-family: inherit;
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  line-height: 1.25 !important;
+  letter-spacing: -0.01em;
+  color: #222222 !important;
+  text-transform: lowercase; /* Tipografia Escandinava em caixa baixa */
+  margin: 0 !important;
+  padding: 0 !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  opacity: 1 !important;
+  transition: color 0.2s ease;
+}
+
+.item-product:hover .item-name {
+  color: #000000 !important;
+}
+
+/* Swatches de Cor Laterais alinhados à direita do título */
+.item-colors-side {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  margin-top: 2px;
+}
+
+.item-colors-side .item-colors {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  gap: 5px;
+}
+
+.item-colors-side .item-colors-bullet {
+  width: 11px !important;
+  height: 11px !important;
+  min-width: 11px !important;
+  border-radius: 50% !important;
+  margin: 0 !important;
+  border: 1px solid rgba(0, 0, 0, 0.16) !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8) !important;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  vertical-align: middle;
+}
+
+.item-colors-side .item-colors-bullet:hover,
+.item-colors-side .item-colors-bullet.selected {
+  transform: scale(1.22);
+  border-color: #111111 !important;
+}
+
+.item-colors-side .item-colors-bullet-more {
+  font-size: 10px !important;
+  line-height: 11px !important;
+  color: #777777 !important;
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  padding: 0 2px !important;
+  cursor: pointer;
+}
+
+/* Preço Direto e Sem Poluição */
+.item-price-link {
+  text-decoration: none !important;
+  margin-top: 3px !important;
+  display: block;
+}
+
+.item-price-container {
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 6px;
+  line-height: 1.2 !important;
+  font-size: 0.92rem !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.item-price {
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  color: #111111 !important;
+  letter-spacing: -0.01em;
+}
+
+.price-compare {
+  font-size: 0.82rem !important;
+  font-weight: 400 !important;
+  color: #999999 !important;
+  text-decoration: line-through !important;
+  margin-left: 4px !important;
+}
+
+/* Ocultar elementos secundários e poluentes nos cards */
+.item-product .item-installments,
+.item-product .payment-discount-container,
+.item-product .item-actions,
+.item-product .subscription-message,
+.item-product .item-slider-pagination-container,
+.item-product .item-more-images-message {
+  display: none !important;
+}
+
+@media (max-width: 767px) {
+  .item-floating-wishlist {
+    top: 8px;
+    right: 8px;
+    width: 30px;
+    height: 30px;
+    .item-wishlist-icon {
+      width: 15px;
+      height: 15px;
+    }
+  }
+
+  .item-floating-quickadd {
+    bottom: 8px;
+    right: 8px;
+  }
+
+  .item-floating-fab {
+    width: 34px;
+    height: 34px;
+    .item-fab-bag-icon {
+      width: 14px;
+      height: 14px;
+    }
+    .item-fab-plus {
+      bottom: 4px;
+      right: 4px;
+      font-size: 10px;
+      width: 10px;
+      height: 10px;
+    }
+  }
+
+  .item-name {
+    font-size: 0.8rem !important;
+  }
+
+  .item-price {
+    font-size: 0.88rem !important;
+  }
+
+  .item-colors-side .item-colors-bullet {
+    width: 9px !important;
+    height: 9px !important;
+    min-width: 9px !important;
+  }
 }
 
 .item-slider-pagination-container {
