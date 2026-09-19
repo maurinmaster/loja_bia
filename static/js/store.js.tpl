@@ -1858,8 +1858,9 @@ DOMContentLoaded.addEventOrExecute(() => {
         {# /* // Youtube video with autoplay */ #}
 
         function loadVideoFrame() {
+            if (window.homeVideoYTPlayer) return;
             window.youtubeIframeService.executeOnReady(() => { 
-                new YT.Player('player', {
+                window.homeVideoYTPlayer = new YT.Player('player', {
                         width: '100%',
                         videoId: '{{video_id}}',
                         playerVars: { 'autoplay': 1, 'playsinline': 1, 'rel': 0, 'loop': 1, 'autopause': 0, 'controls': 0, 'showinfo': 0, 'modestbranding': 1, 'branding': 0, 'fs': 0, 'iv_load_policy': 3 },
@@ -1894,7 +1895,103 @@ DOMContentLoaded.addEventOrExecute(() => {
                 });
             {% endif %}
         {% endif %}
-        
+
+        // Floating Video - fast initial load
+        setTimeout(function() {
+            if (!document.querySelector('.js-home-video-iframe iframe')) {
+                loadVideoFrame();
+            }
+        }, 350);
+
+        // Floating Video Controls & State
+        try {
+            if (sessionStorage.getItem('loja_bia_video_bubble_minimized') === 'true') {
+                jQueryNuvem('.js-floating-video-bubble').addClass('is-minimized');
+                jQueryNuvem('.js-floating-video-launcher').show();
+            }
+        } catch(e) {}
+
+        // Sound Toggle (Mute / Unmute)
+        jQueryNuvem(document).on('click', '.js-floating-video-sound', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var $btn = jQueryNuvem(this);
+            var $mutedIcon = $btn.find('.js-icon-sound-muted');
+            var $onIcon = $btn.find('.js-icon-sound-on');
+            var iframe = document.querySelector('.js-home-video-iframe iframe') || document.querySelector('.js-home-video-iframe');
+
+            if (window.homeVideoYTPlayer && typeof window.homeVideoYTPlayer.isMuted === 'function') {
+                if (window.homeVideoYTPlayer.isMuted()) {
+                    window.homeVideoYTPlayer.unMute();
+                    window.homeVideoYTPlayer.setVolume(100);
+                    $mutedIcon.hide();
+                    $onIcon.show();
+                } else {
+                    window.homeVideoYTPlayer.mute();
+                    $mutedIcon.show();
+                    $onIcon.hide();
+                }
+            } else if (iframe && iframe.contentWindow) {
+                if ($mutedIcon.is(':visible')) {
+                    iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+                    iframe.contentWindow.postMessage('{"event":"command","func":"setVolume","args":[100]}', '*');
+                    $mutedIcon.hide();
+                    $onIcon.show();
+                } else {
+                    iframe.contentWindow.postMessage('{"event":"command","func":"mute","args":""}', '*');
+                    $mutedIcon.show();
+                    $onIcon.hide();
+                }
+            }
+        });
+
+        // Close / Minimize
+        jQueryNuvem(document).on('click', '.js-floating-video-close', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            jQueryNuvem('.js-floating-video-bubble').addClass('is-minimized');
+            jQueryNuvem('.js-floating-video-launcher').fadeIn(200);
+            try {
+                sessionStorage.setItem('loja_bia_video_bubble_minimized', 'true');
+            } catch(e) {}
+        });
+
+        // Restore / Open Launcher
+        jQueryNuvem(document).on('click', '.js-floating-video-launcher', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            jQueryNuvem(this).hide();
+            jQueryNuvem('.js-floating-video-bubble').removeClass('is-minimized');
+            try {
+                sessionStorage.removeItem('loja_bia_video_bubble_minimized');
+            } catch(e) {}
+        });
+
+        // Tap video area to Play / Pause
+        jQueryNuvem(document).on('click', '.js-floating-video-toggle-play', function(e) {
+            e.preventDefault();
+            var $indicator = jQueryNuvem('.js-floating-video-play-indicator');
+            var iframe = document.querySelector('.js-home-video-iframe iframe') || document.querySelector('.js-home-video-iframe');
+
+            if (window.homeVideoYTPlayer && typeof window.homeVideoYTPlayer.getPlayerState === 'function') {
+                var state = window.homeVideoYTPlayer.getPlayerState();
+                if (state === YT.PlayerState.PLAYING) {
+                    window.homeVideoYTPlayer.pauseVideo();
+                    $indicator.fadeIn(150);
+                } else {
+                    window.homeVideoYTPlayer.playVideo();
+                    $indicator.fadeOut(150);
+                }
+            } else if (iframe && iframe.contentWindow) {
+                if ($indicator.is(':visible')) {
+                    iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+                    $indicator.fadeOut(150);
+                } else {
+                    iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+                    $indicator.fadeIn(150);
+                }
+            }
+        });
 
         function onPlayerReady(event) {
             {% if settings.video_type == 'autoplay' %}
